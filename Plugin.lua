@@ -1,22 +1,25 @@
-local HeadTagPlugin = {
-    ["Name"] = "HeadTag System",
-    ["Description"] = "Adds a custom profile tag above your head."
-}
+print("Headtag Plugin: Attempting to Load...")
 
--- The 'Library' is passed by the Hub automatically when you hit Import
-function HeadTagPlugin:Init(Library)
-    -- This creates the section/button in the Plugins tab you see in your photo
-    local NewPluginTab = Library:CreateSection("HeadTag Settings")
+local Plugin = {}
+Plugin.Name = "Headtag System"
+Plugin.Description = "Adds a custom profile tag above your head."
 
-    NewPluginTab:CreateButton({
+function Plugin:Init(Library)
+    print("Headtag Plugin: Init Handshake Successful!")
+    
+    -- Create the section in the Plugins tab
+    local NewSection = Library:CreateSection("Headtag Settings")
+
+    NewSection:CreateButton({
         Name = "Activate Tag",
         Callback = function()
-            -- This is where the actual HeadTag code goes
             local Player = game.Players.LocalPlayer
             local Char = Player.Character or Player.CharacterAdded:Wait()
-            
             local Head = Char:WaitForChild("Head")
-            if Head:FindFirstChild("OverdriveTag") then Head.OverdriveTag:Destroy() end
+
+            if Head:FindFirstChild("OverdriveTag") then 
+                Head.OverdriveTag:Destroy() 
+            end
 
             local Billboard = Instance.new("BillboardGui")
             Billboard.Name = "OverdriveTag"
@@ -39,9 +42,10 @@ function HeadTagPlugin:Init(Library)
             Info.Text = Player.Name .. "\nExec: Ronix"
             Info.Parent = Main
             
-            print("HeadTag Activated!")
+            print("HeadTag Successfully Activated!")
         end
     })
 end
 
-return HeadTagPlugin
+return Plugin
+
